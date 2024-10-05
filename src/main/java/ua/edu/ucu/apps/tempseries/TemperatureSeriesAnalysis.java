@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 
 public class TemperatureSeriesAnalysis {
-    private static final double abs = -273.0;
+    private static final double ABSOLUTE_ZERO = -273.0;
     private double[] temperatures;
 
     public TemperatureSeriesAnalysis() {
@@ -17,7 +17,7 @@ public class TemperatureSeriesAnalysis {
             throw new IllegalArgumentException();
         }
         for (double temp : temperatureSeries)  {
-            if (temp < abs){
+            if (temp < ABSOLUTE_ZERO) {
                 throw new InputMismatchException();
             }
         }
@@ -45,7 +45,7 @@ public class TemperatureSeriesAnalysis {
         double mean = average();
         double sumSq = 0;
         for (double temp : temperatures) {
-            sumSq += Math.pow(temp - mean, 2);
+            sumSq += (temp - mean) * (temp - mean);
         }
         return Math.sqrt(sumSq / (temperatures.length - 1));
         
@@ -82,9 +82,9 @@ public class TemperatureSeriesAnalysis {
             throw new IllegalArgumentException();
         }
         double closest = temperatures[0];
-        for (double temp : temperatures){
-            if (Math.abs(temp) < Math.abs(closest) || 
-                (Math.abs(temp) == Math.abs(closest) && temp > closest)) {
+        for (double temp : temperatures) {
+            if (Math.abs(temp) < Math.abs(closest) 
+                || (Math.abs(temp) == Math.abs(closest) && temp > closest)) {
                 closest = temp;
                 }
             }
@@ -97,10 +97,12 @@ public class TemperatureSeriesAnalysis {
             
             double closest = temperatures[0];
             for (double temp : temperatures) {
-                if (Math.abs(temp - tempValue) < Math.abs(closest - tempValue)) {
+                if (Math.abs(temp - tempValue) 
+                    < Math.abs(closest - tempValue)) {
                     closest = temp;
                 }
-                else if (Math.abs(temp - tempValue) == Math.abs(closest - tempValue) 
+                else if (Math.abs(temp - tempValue) 
+                        == Math.abs(closest - tempValue) 
                          && temp > closest && tempValue == 0) {
                     closest = temp;
                 }
@@ -155,7 +157,7 @@ public class TemperatureSeriesAnalysis {
 
     public int addTemps(double... temps) {
         for (double temp : temps) {
-            if (temp < abs) {
+            if (temp < ABSOLUTE_ZERO) {
                 throw new InputMismatchException();
             }
         }
