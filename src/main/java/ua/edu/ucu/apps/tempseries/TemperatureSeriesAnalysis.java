@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 
 public class TemperatureSeriesAnalysis {
+    private static final double abs = -273.0;
     private double[] temperatures;
 
     public TemperatureSeriesAnalysis() {
@@ -16,11 +17,12 @@ public class TemperatureSeriesAnalysis {
             throw new IllegalArgumentException();
         }
         for (double temp : temperatureSeries)  {
-            if (temp < -273){
+            if (temp < abs){
                 throw new InputMismatchException();
             }
         }
-        this.temperatures = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
+        this.temperatures = Arrays.copyOf(temperatureSeries, 
+                                          temperatureSeries.length);
 
     }
     
@@ -81,7 +83,8 @@ public class TemperatureSeriesAnalysis {
         }
         double closest = temperatures[0];
         for (double temp : temperatures){
-            if (Math.abs(temp) < Math.abs(closest) || (Math.abs(temp) == Math.abs(closest) && temp > closest)) {
+            if (Math.abs(temp) < Math.abs(closest) || 
+                (Math.abs(temp) == Math.abs(closest) && temp > closest)) {
                 closest = temp;
                 }
             }
@@ -97,7 +100,8 @@ public class TemperatureSeriesAnalysis {
                 if (Math.abs(temp - tempValue) < Math.abs(closest - tempValue)) {
                     closest = temp;
                 }
-                else if (Math.abs(temp - tempValue) == Math.abs(closest - tempValue) && temp > closest && tempValue == 0) {
+                else if (Math.abs(temp - tempValue) == Math.abs(closest - tempValue) 
+                         && temp > closest && tempValue == 0) {
                     closest = temp;
                 }
             }
@@ -107,7 +111,7 @@ public class TemperatureSeriesAnalysis {
         
 
     public double[] findTempsLessThen(double tempValue) {
-        return Arrays.stream (temperatures)
+        return Arrays.stream(temperatures)
             .filter(temp -> temp < tempValue)
             .toArray();
     }
@@ -120,7 +124,8 @@ public class TemperatureSeriesAnalysis {
 
     public double[] findTempsInRange(double lowerBound, double upperBound) {
         return Arrays.stream(temperatures)
-            .filter(temp -> temp >= lowerBound && temp <= upperBound)
+            .filter(temp -> temp >= lowerBound 
+                    && temp <= upperBound)
             .toArray();
     }
 
@@ -150,7 +155,7 @@ public class TemperatureSeriesAnalysis {
 
     public int addTemps(double... temps) {
         for (double temp : temps) {
-            if (temp < -273) {
+            if (temp < abs) {
                 throw new InputMismatchException();
             }
         }
